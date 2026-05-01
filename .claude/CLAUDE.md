@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-`zantarix/actions` is a monorepo of independent GitHub Actions (see `docs/adr/002-actions-monorepo-layout.md`). Each action lives in its own subdirectory with its own `package.json` and vendored `node_modules/`. The root `package.json` is for dev tooling only and is **not** an npm workspace — the two projects are independent.
+`zantarix/actions` is a monorepo of independent GitHub Actions (see `docs/adr/002-actions-monorepo-layout.md`). Each action lives in its own subdirectory with its own `package.json` and vendored `node_modules/`. The root `package.json` is for dev tooling only and is **not** an npm workspace — the two projects are independent. It is also the single package tracked by cursus for release management (see `docs/adr/003-cursus-release-management.md`); `setup-cursus/package.json`'s `version` field is decorative and held at `0.0.0`.
 
 ### setup-cursus
 

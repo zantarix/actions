@@ -1,0 +1,13 @@
+[npm]
+enabled = true
+
+[git]
+enabled = true
+strategy = "branch"
+publish_private_packages = ["@zantarix/actions"]
+
+[github]
+enabled = true
+
+[github.artifacts]
+# Empty pending the build-provenance attestation follow-up (ADR-001).

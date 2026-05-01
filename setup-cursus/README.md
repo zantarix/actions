@@ -57,7 +57,7 @@ The action also requires `GH_TOKEN` to be set so `gh attestation verify` can aut
 
 ## Pinning the action by SHA (recommended)
 
-Only immutable version tags (e.g. `v1.0.0`) are released. Pin the action by commit SHA and let Dependabot or Renovate keep it current — this is the only way to guarantee the tag you reference cannot be retargeted:
+Releases use immutable version tags (e.g. `v1.0.0`). Pin the action by commit SHA and let Dependabot or Renovate keep it current — this is the only way to guarantee the tag you reference cannot be retargeted:
 
 ```yaml
 - uses: zantarix/actions/setup-cursus@<sha>  # vX.Y.Z

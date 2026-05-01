@@ -187,3 +187,7 @@ Ship v1 with the `version` input only and revisit `version-file` under a future 
 ### No caching -- re-download and re-verify on every job
 
 (Considered as the "keep the original ADR-001 posture" alternative for the caching section.) Every job fetches the artifact from GitHub Releases and verifies it; no tool-cache path is involved. This was the original position and is a valid security stance. Revised because mandatory re-verification on cache hits achieves the same trust guarantee (the verifier runs on every job invocation) while allowing self-hosted runners to avoid redundant downloads of the same artifact version. The revised policy is strictly no weaker than the original.
+
+## Errata
+
+**2026-05-02** -- The "Action versioning and trust model for the action itself" section requires each action release to publish a build-provenance attestation via `actions/attest-build-provenance`. The integration of that attestation with the release pipeline (which artifact to attest, how it is attached to the GitHub Release, and how the release workflow produces and verifies it) is deferred by [ADR-003](003-cursus-release-management.md) to a future follow-up ADR. The release workflow accepted under [ADR-003](003-cursus-release-management.md) leaves `[github.artifacts]` empty as a placeholder for that work; until that follow-up ADR lands, releases produced by the cursus-managed pipeline will not yet include build-provenance attestations.
