@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed (2026-05-01)
+Accepted (2026-05-02)
 
 ## Context
 
@@ -40,8 +40,8 @@ Node 24 is the LTS runtime the GitHub Actions runtime surfaces as `node24`. When
 
 ### Action steps
 
-1. **Detect platform** -- read `process.env.RUNNER_OS` and `process.env.RUNNER_ARCH` and map the pair to one of the seven artifact filenames produced by the cursus `release-artifacts.yml` workflow:
-   - `cursus-linux-x86_64`, `cursus-linux-aarch64`, `cursus-linux-riscv64gc`
+1. **Detect platform** -- read `process.env.RUNNER_OS` and `process.env.RUNNER_ARCH` and map the pair to one of the six artifact filenames produced by the cursus `release-artifacts.yml` workflow:
+   - `cursus-linux-x86_64`, `cursus-linux-aarch64`
    - `cursus-osx-x86_64`, `cursus-osx-aarch64`
    - `cursus-windows-x86_64.exe`, `cursus-windows-aarch64.exe`
    An unsupported `RUNNER_OS` × `RUNNER_ARCH` combination fails the step with a clear error listing the supported platforms.
@@ -56,7 +56,7 @@ Node 24 is the LTS runtime the GitHub Actions runtime surfaces as `node24`. When
 
 ### Consumer workflow permissions
 
-Consumers must grant the workflow `contents: read`, `attestations: read`, and `id-token: write`. The first allows the artifact download from the cursus public-release endpoint, the second allows `gh attestation verify` to fetch the attestation bundle from the GitHub attestations API, and the third is required by `gh` for the OIDC handshake the verifier performs. The action's documentation shall state these three permissions explicitly.
+Consumers must grant the workflow `contents: read` and `attestations: read`. The first allows the artifact download from the cursus public-release endpoint, the second allows `gh attestation verify` to fetch the attestation bundle from the GitHub attestations API. The action's step must also receive `GH_TOKEN: ${{ github.token }}` via its `env:` block so that `gh` can authenticate to the attestations API.
 
 ### Version selection
 
@@ -86,7 +86,7 @@ The original ADR-001 draft took a "no caching at all" position on the grounds th
 
 ### Action versioning and trust model for the action itself
 
-The `zantarix/actions` repository shall be versioned independently of cursus, on its own semver track. A new cursus release shall not require a new action release; conversely, action bug-fixes or feature additions shall not be tied to the cursus release cadence. Action `v1` shall work for every cursus release whose `release-artifacts.yml` workflow produces the seven standard artifacts and signs them with the standard identity.
+The `zantarix/actions` repository shall be versioned independently of cursus, on its own semver track. A new cursus release shall not require a new action release; conversely, action bug-fixes or feature additions shall not be tied to the cursus release cadence. Action `v1` shall work for every cursus release whose `release-artifacts.yml` workflow produces the six standard artifacts and signs them with the standard identity.
 
 Each action release shall publish a build-provenance attestation via `actions/attest-build-provenance`, signed by the same GitHub Actions OIDC trust root cursus already relies on. The action's `README.md` shall strongly recommend that consumers pin the action by SHA -- `uses: zantarix/actions/setup-cursus@<sha>` -- and configure Dependabot to keep that SHA current. Only immutable version tags (e.g. `v1.0.0`) are released; no mutable major or minor floating tags (e.g. `v1`, `v1.x`) are maintained.
 

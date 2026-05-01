@@ -15,8 +15,8 @@ GitHub Action that installs the [cursus](https://github.com/zantarix/cursus) rel
 ### Read version from an existing pin file
 
 ```yaml
-# Cargo.toml — reads [package.metadata.bin.cursus].version
-#              or [workspace.metadata.bin.cursus].version
+# Cargo.toml — reads [package.metadata.bin.cursus-bin].version
+#              or [workspace.metadata.bin.cursus-bin].version
 #              or [dependencies.cursus]
 - uses: zantarix/actions/setup-cursus@<sha>
   with:
@@ -74,5 +74,5 @@ Only immutable version tags (e.g. `v1.0.0`) are released. Pin the action by comm
 2. Resolves the cursus version from `version` or `version-file`.
 3. Checks the tool cache (`RUNNER_TOOL_CACHE/setup-cursus/<version>/<platform>/bin/`). On a cache hit, verification still runs; a failed verify treats the cache as poisoned and falls through to a fresh download.
 4. Downloads the artifact from the cursus GitHub release if not cached.
-5. Runs `gh attestation verify` with `--owner zantarix` and `--signer-workflow zantarix/cursus/.github/workflows/release-artifacts.yml`. Any failure is unrecoverable.
+5. Runs `gh attestation verify` with `--owner zantarix` and `--cert-identity https://github.com/zantarix/cursus/.github/workflows/release-artifacts.yml@refs/tags/cursus@<version>`. Any failure is unrecoverable.
 6. Makes the binary executable and appends its directory to `GITHUB_PATH`.

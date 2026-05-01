@@ -11,19 +11,19 @@ function fixture(name) {
 	return readFileSync(join(FIXTURES, name), 'utf8');
 }
 
-test('parseCargoToml: [package.metadata.bin.cursus]', () => {
+test('parseCargoToml: [package.metadata.bin.cursus-bin]', () => {
 	assert.equal(parseCargoToml(fixture('cargo-pkg-bin.toml')), '0.5.1');
 });
 
-test('parseCargoToml: [package.metadata.bin.cursus] with = prefix', () => {
+test('parseCargoToml: [package.metadata.bin.cursus-bin] with = prefix', () => {
 	assert.equal(parseCargoToml(fixture('cargo-pkg-bin-eq.toml')), '0.5.1');
 });
 
-test('parseCargoToml: [workspace.metadata.bin.cursus]', () => {
+test('parseCargoToml: [workspace.metadata.bin.cursus-bin]', () => {
 	assert.equal(parseCargoToml(fixture('cargo-ws-bin.toml')), '0.5.1');
 });
 
-test('parseCargoToml: [workspace.metadata.bin.cursus] with = prefix', () => {
+test('parseCargoToml: [workspace.metadata.bin.cursus-bin] with = prefix', () => {
 	assert.equal(parseCargoToml(fixture('cargo-ws-bin-eq.toml')), '0.5.1');
 });
 

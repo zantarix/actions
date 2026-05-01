@@ -1,6 +1,7 @@
 {
 	"name": "@zantarix/setup-cursus",
 	"version": "1.0.0",
+	"private": true,
 	"description": "GitHub Action that installs the cursus release-management CLI",
 	"type": "module",
 	"license": "MPL-2.0",

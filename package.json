@@ -1,11 +1,11 @@
 {
-  "name": "zantarix-actions",
-  "private": true,
-  "description": "Zantarix GitHub Actions — monorepo of independent npm projects",
-  "scripts": {
-    "test": "cd setup-cursus && npm test"
-  },
-  "devDependencies": {
-    "@zantarix/cursus": "0.5.1"
-  }
+	"name": "@zantarix/actions",
+	"private": true,
+	"description": "Zantarix GitHub Actions — monorepo of independent npm projects",
+	"scripts": {
+		"test": "cd setup-cursus && npm test"
+	},
+	"devDependencies": {
+		"@zantarix/cursus": "0.5.1"
+	}
 }
