@@ -1,5 +1,5 @@
 {
-  description = "setup-cursus GitHub Action development environment";
+  description = "zantarix/actions development environment";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";

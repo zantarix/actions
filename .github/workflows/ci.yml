@@ -18,6 +18,7 @@ jobs:
 
       - name: Run unit tests
         run: node --test 'tests/**/*.test.js'
+        working-directory: setup-cursus
 
   smoke-test:
     name: Smoke test (${{ matrix.os }})
@@ -34,9 +35,9 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Setup cursus
-        uses: ./
+        uses: ./setup-cursus
         with:
-          version: '0.5.1'
+          version-file: package.json
 
       - name: Verify installation
         run: cursus --version

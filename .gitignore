@@ -1,5 +1,6 @@
-# node_modules is intentionally committed — smol-toml is vendored via bundleDependencies.
-# Do not add node_modules here.
+# Ignore node_modules everywhere except setup-cursus/ (smol-toml is vendored via bundleDependencies).
+node_modules/
+!setup-cursus/node_modules/
 
 .claude/workdirs
 .env

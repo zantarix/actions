@@ -1,16 +1,11 @@
 {
-	"name": "@zantarix/setup-cursus",
-	"version": "1.0.0",
-	"description": "GitHub Action that installs the cursus release-management CLI",
-	"type": "module",
-	"license": "MPL-2.0",
-	"scripts": {
-		"test": "node --test 'tests/**/*.test.js'"
-	},
-	"dependencies": {
-		"smol-toml": "1.6.1"
-	},
-	"bundleDependencies": [
-		"smol-toml"
-	]
+  "name": "zantarix-actions",
+  "private": true,
+  "description": "Zantarix GitHub Actions — monorepo of independent npm projects",
+  "scripts": {
+    "test": "cd setup-cursus && npm test"
+  },
+  "devDependencies": {
+    "@zantarix/cursus": "0.5.1"
+  }
 }
