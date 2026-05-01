@@ -1,0 +1,6 @@
+{
+  "name": "my-app",
+  "optionalDependencies": {
+    "@zantarix/cursus": "0.5.1"
+  }
+}

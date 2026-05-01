@@ -1,0 +1,12 @@
+[package]
+name = "my-crate"
+version = "0.1.0"
+
+[package.metadata.bin]
+cursus-bin = { version = "0.5.1", bins = ["cursus"] }
+
+[workspace]
+members = []
+
+[workspace.metadata.bin]
+cursus-bin = { version = "0.5.0", bins = ["cursus"] }

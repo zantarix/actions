@@ -1,0 +1,5 @@
+[workspace]
+members = ["crates/*"]
+
+[workspace.metadata.bin]
+cursus-bin = { version = "=0.5.1", bins = ["cursus"] }

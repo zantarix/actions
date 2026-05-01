@@ -1,0 +1,19 @@
+name: Setup cursus
+description: Install a verified cursus binary and add it to PATH
+author: Zantarix
+
+inputs:
+  version:
+    description: >
+      Exact cursus version to install (e.g. 1.5.0).
+      Mutually exclusive with version-file.
+    required: false
+  version-file:
+    description: >
+      Path to a Cargo.toml or package.json that already pins the cursus version
+      for local development. Mutually exclusive with version.
+    required: false
+
+runs:
+  using: node24
+  main: main.js
