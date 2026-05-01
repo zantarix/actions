@@ -42,6 +42,8 @@ jobs:
         uses: ./setup-cursus
         with:
           version-file: package.json
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - name: Verify installation
         run: cursus --version
