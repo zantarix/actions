@@ -1,0 +1,20 @@
+{
+	"enabledPlugins": {
+		"base@zantarix": true
+	},
+	"extraKnownMarketplaces": {
+		"zantarix": {
+			"source": {
+				"source": "github",
+				"repo": "zantarix/claude-code"
+			},
+			"autoUpdate": true
+		}
+	},
+	"permissions": {
+		"deny": [
+			"Read(**/.env)",
+			"Read(**/secrets/**)"
+		]
+	}
+}
