@@ -43,7 +43,16 @@ Exactly one of `version` or `version-file` must be provided.
 permissions:
   contents: read       # artifact download from the cursus GitHub release
   attestations: read   # gh attestation verify fetches the attestation bundle
-  id-token: write      # OIDC handshake used by gh during verification
+```
+
+The action also requires `GH_TOKEN` to be set so `gh attestation verify` can authenticate. Pass `github.token` via the step's `env:`:
+
+```yaml
+- uses: zantarix/actions/setup-cursus@<sha>
+  with:
+    version: '0.5.1'
+  env:
+    GH_TOKEN: ${{ github.token }}
 ```
 
 ## Pinning the action by SHA (recommended)

@@ -30,7 +30,7 @@ The action will be a JavaScript action targeting the `node24` runtime (`runs.usi
 
 The only runtime dependency is `smol-toml`, a TOML parser used to read `Cargo.toml` in the `version-file` path. It is committed to the repository via `node_modules/` and declared under `bundleDependencies` in `package.json` -- the same posture Cursus uses for its own npm distribution ([Cursus ADR-051](https://github.com/zantarix/cursus/blob/main/docs/adr/051-bundle-sigstore-deps-via-workspace-removal.md)). No `@actions/core`, `@actions/exec`, `@actions/tool-cache`, or any other `@actions/*` package is taken. All interaction with the Actions runner (reading inputs, appending to `PATH`, signalling failure) is done directly against the runner contract using Node built-ins:
 
-- Inputs read from `process.env.INPUT_VERSION` / `process.env.INPUT_VERSION_FILE` (GitHub Actions sets these automatically from `with:` keys).
+- Inputs read from `process.env` using the runner's input-to-env-var convention: GitHub Actions exposes each `with:` key as `INPUT_<NAME>`, uppercasing the name and replacing spaces with underscores but **preserving dashes**. The `version` input is therefore read from `process.env.INPUT_VERSION`, and the `version-file` input is read from `process.env['INPUT_VERSION-FILE']` (bracket notation is required because the dash is not a valid identifier character).
 - PATH additions written via `fs.appendFileSync(process.env.GITHUB_PATH, binDir + os.EOL)`.
 - Failures signalled by writing to stderr and calling `process.exit(1)`.
 - Artifact downloads performed with the global `fetch()` API built into Node 24.

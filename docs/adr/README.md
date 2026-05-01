@@ -11,7 +11,7 @@ Once an ADR is accepted and committed, it is treated as immutable. If a decision
 | ADR | Title | Status |
 |-----|-------|--------|
 | [ADR-001](001-setup-cursus-github-action.md) | `setup-cursus` GitHub Action | Proposed |
-| [ADR-002](002-actions-monorepo-layout.md) | Actions monorepo of independent npm projects | Proposed |
+| [ADR-002](002-actions-monorepo-layout.md) | Actions monorepo of independent npm projects | Accepted |
 
 ## Related Projects
 
