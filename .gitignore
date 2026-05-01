@@ -1,1 +1,25 @@
+# node_modules is intentionally committed — smol-toml is vendored via bundleDependencies.
+# Do not add node_modules here.
+
 .claude/workdirs
+.env
+.direnv/
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux
+*~
+
+# Windows
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
