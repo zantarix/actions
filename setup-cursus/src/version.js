@@ -5,7 +5,7 @@ import { parsePackageJson } from './parsers/package-json.js';
 
 export function resolveVersion(
 	inputVersion = (process.env.INPUT_VERSION ?? '').trim(),
-	inputVersionFile = (process.env.INPUT_VERSION_FILE ?? '').trim(),
+	inputVersionFile = (process.env['INPUT_VERSION-FILE'] ?? '').trim(),
 	readFile = (path) => readFileSync(path, 'utf8'),
 ) {
 	const hasVersion = inputVersion.length > 0;
