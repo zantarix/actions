@@ -1,0 +1,16 @@
+{
+	"name": "@zantarix/setup-cursus",
+	"version": "1.0.0",
+	"description": "GitHub Action that installs the cursus release-management CLI",
+	"type": "module",
+	"license": "MPL-2.0",
+	"scripts": {
+		"test": "node --test 'tests/**/*.test.js'"
+	},
+	"dependencies": {
+		"smol-toml": "1.6.1"
+	},
+	"bundleDependencies": [
+		"smol-toml"
+	]
+}
