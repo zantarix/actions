@@ -1,0 +1,13 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": [
+		"github>zantarix/renovate-config"
+	],
+	"packageRules": [
+		{
+			"description": "smol-toml is vendored into setup-cursus/node_modules/ and requires manual verification before merging",
+			"matchPackageNames": ["smol-toml"],
+			"automerge": false
+		}
+	]
+}
