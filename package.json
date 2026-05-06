@@ -7,6 +7,6 @@
 		"test": "cd setup-cursus && npm test"
 	},
 	"devDependencies": {
-		"@zantarix/cursus": "0.5.3"
+		"@zantarix/cursus": "0.6.0"
 	}
 }
