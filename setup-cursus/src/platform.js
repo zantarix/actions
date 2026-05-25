@@ -23,5 +23,8 @@ export function detectPlatform(
 			`Supported combinations: ${SUPPORTED}`,
 		);
 	}
-	return { artifact, isWindows: os === 'Windows' };
+	// The Sigstore bundle asset is named by appending `.sigstore.json` to the full
+	// binary filename, including any `.exe` suffix (e.g. `cursus-windows-x86_64.exe`
+	// → `cursus-windows-x86_64.exe.sigstore.json`). Confirmed against cursus@0.9.0.
+	return { artifact, bundle: `${artifact}.sigstore.json`, isWindows: os === 'Windows' };
 }

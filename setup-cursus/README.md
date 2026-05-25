@@ -49,7 +49,8 @@ concurrency:
 # read access only for setup-cursus to download and verify the cursus binary.
 permissions:
   contents: read
-  attestations: read
+  # For cursus < 0.9.0 verification requires the `attestations: read` permission.
+  # attestations: read
 
 jobs:
   cursus:
@@ -111,11 +112,12 @@ Exactly one of `version` or `version-file` must be provided.
 
 ```yaml
 permissions:
-  contents: read       # artifact download from the cursus GitHub release
-  attestations: read   # gh attestation verify fetches the attestation bundle
+  contents: read       # artifact (and bundle) download from the cursus GitHub release
 ```
 
-The action also requires `GH_TOKEN` to be set so `gh attestation verify` can authenticate. Pass `github.token` via the step's `env:`:
+For cursus **>= 0.9.0** the action downloads the release's Sigstore bundle asset and verifies it offline — no attestations-API call is made, so no `attestations: read` permission is required (cursus is a public repository). The legacy `attestations: read` permission is only relevant when resolving a **pre-0.9.0** version, where verification still discovers the attestation via the GitHub attestations API.
+
+The action still requires `GH_TOKEN` to be set: `gh attestation verify` constructs an authenticated client at startup even on the offline `--bundle` path. The ambient `github.token` is sufficient and needs no special scopes for the public cursus repo. Pass it via the step's `env:`:
 
 ```yaml
 - uses: zantarix/actions/setup-cursus@<sha>
@@ -136,7 +138,7 @@ Releases use immutable version tags (e.g. `v1.0.0`). Pin the action by commit SH
 ## Known limitations
 
 - **`gh` must be preinstalled.** This action uses `gh attestation verify` to check the cursus binary's provenance. GitHub-hosted runners ship `gh` by default. Self-hosted runners without `gh` preinstalled cannot use this action without first installing it.
-- **Verification runs on every invocation.** The attestation check is mandatory and unconditional — it cannot be disabled. An outage of the GitHub attestations API will cause the action to fail.
+- **Verification runs on every invocation.** The attestation check is mandatory and unconditional — it cannot be disabled. For cursus >= 0.9.0 the check is offline (it reads the downloaded bundle), so it no longer depends on the attestations API being reachable; for pre-0.9.0 versions an attestations-API outage will still cause the action to fail.
 
 ## How it works
 
@@ -144,5 +146,7 @@ Releases use immutable version tags (e.g. `v1.0.0`). Pin the action by commit SH
 2. Resolves the cursus version from `version` or `version-file`.
 3. Checks the tool cache (`RUNNER_TOOL_CACHE/setup-cursus/<version>/<platform>/bin/`). On a cache hit, verification still runs; a failed verify treats the cache as poisoned and falls through to a fresh download.
 4. Downloads the artifact from the cursus GitHub release if not cached.
-5. Runs `gh attestation verify` with `--owner zantarix` and `--cert-identity https://github.com/zantarix/cursus/.github/workflows/release-artifacts.yml@refs/tags/cursus@<version>`. Any failure is unrecoverable.
+5. Verifies the binary against the per-version pinned SAN `https://github.com/zantarix/cursus/.github/workflows/release-artifacts.yml@refs/tags/cursus@<version>` (with `--owner zantarix`). Any failure is unrecoverable.
+   - **cursus >= 0.9.0:** downloads the matching `<binary>.sigstore.json` bundle asset into `RUNNER_TEMP` and verifies offline via `gh attestation verify … --bundle <bundle>` — no attestations-API call. The bundle is downloaded fresh on every run (including cache hits) and is kept out of the tool cache.
+   - **cursus < 0.9.0:** verifies via `gh attestation verify` against the GitHub attestations API (no bundle asset exists for these releases).
 6. Makes the binary executable and appends its directory to `GITHUB_PATH`.

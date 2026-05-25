@@ -24,14 +24,15 @@ There is no build step. The action runs directly from source (`setup-cursus/main
 
 ## Architecture
 
-The action entry point is `setup-cursus/main.js`, which orchestrates these steps in order: resolve version → detect platform → check tool cache → download artifact → verify attestation → install. Each step is a module in `setup-cursus/src/`:
+The action entry point is `setup-cursus/main.js`, which orchestrates these steps in order: resolve version → detect platform → check tool cache → download artifact (and, for cursus ≥ 0.9.0, its Sigstore bundle) → verify → install. Each step is a module in `setup-cursus/src/`:
 
 - `version.js` — reads `INPUT_VERSION` or `INPUT_VERSION_FILE`; the two inputs are mutually exclusive
-- `platform.js` — maps `RUNNER_OS` × `RUNNER_ARCH` to artifact filenames
+- `platform.js` — maps `RUNNER_OS` × `RUNNER_ARCH` to the artifact and `.sigstore.json` bundle filenames
 - `parsers/cargo-toml.js` — resolves cursus version from `[package.metadata.bin.cursus]`, `[workspace.metadata.bin.cursus]`, or `[dependencies.cursus]`
 - `parsers/package-json.js` — resolves from `@zantarix/cursus` in any dependency field
-- `download.js` — fetches the artifact from GitHub Releases using the `fetch()` API
-- `verify.js` — invokes `gh attestation verify` (mandatory; never skipped, even on cache hits)
+- `download.js` — fetches a release asset (binary or bundle) from GitHub Releases using the `fetch()` API
+- `bundle.js` — version-gates verification: cursus ≥ 0.9.0 verifies offline against the downloaded `.sigstore.json` bundle; older versions use `gh` attestations-API discovery
+- `verify.js` — invokes `gh attestation verify` (mandatory; never skipped, even on cache hits), with `--bundle` on the offline path
 - `install.js` — sets the executable bit (Unix) and appends the bin dir to `GITHUB_PATH`
 
 ## Key Constraints

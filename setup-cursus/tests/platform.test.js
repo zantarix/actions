@@ -15,9 +15,18 @@ for (const { os, arch, artifact, isWindows } of SUPPORTED) {
 	test(`detectPlatform: ${os}/${arch} → ${artifact}`, () => {
 		const result = detectPlatform(os, arch);
 		assert.equal(result.artifact, artifact);
+		assert.equal(result.bundle, `${artifact}.sigstore.json`);
 		assert.equal(result.isWindows, isWindows);
 	});
 }
+
+test('detectPlatform: Windows bundle name keeps the .exe suffix', () => {
+	// Confirmed against cursus@0.9.0: cursus-windows-x86_64.exe.sigstore.json
+	assert.equal(
+		detectPlatform('Windows', 'X64').bundle,
+		'cursus-windows-x86_64.exe.sigstore.json',
+	);
+});
 
 test('detectPlatform: unsupported platform throws', () => {
 	assert.throws(

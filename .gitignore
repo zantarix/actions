@@ -3,6 +3,7 @@ node_modules/
 !setup-cursus/node_modules/
 
 .claude/workdirs
+.reviews
 .env
 .direnv/
 
