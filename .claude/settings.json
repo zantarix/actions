@@ -1,6 +1,6 @@
 {
 	"enabledPlugins": {
-		"base@zantarix": true
+		"zantarix@zantarix": true
 	},
 	"extraKnownMarketplaces": {
 		"zantarix": {
